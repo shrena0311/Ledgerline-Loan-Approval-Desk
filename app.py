@@ -29,402 +29,484 @@ CAT_COLS = ["Gender", "Married", "Education", "Self_Employed", "Property_Area"]
 # --------------------------------------------------------------------------
 # Style: a bank ledger sitting on a clerk's desk, not a dashboard.
 # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# Style: a bank ledger sitting on a clerk's desk, not a dashboard.
+# --------------------------------------------------------------------------
 st.markdown(
     """
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root {
-  --ink: #101826;
-  --ink-2: #182236;
-  --paper: #F1E8D6;
-  --paper-2: #e9dcbd;
-  --rule: #cdbd94;
-  --brass: #B7863C;
-  --brass-2: #8f6a2e;
-  --sage: #3f6b53;
-  --rust: #9a4a35;
-  --text-on-paper: #2a2216;
-  --text-dim: #8b93a3;
-  --text-light: #e7e2d3;
-}
+    <style>
 
-html, body, [class*="css"] {
-  font-family: "Inter", sans-serif;
-}
+    :root{
+      --ink:#101826;
+      --ink-2:#182236;
+      --paper:#F1E8D6;
+      --paper-2:#e9dcbd;
+      --rule:#cdbd94;
+      --brass:#B7863C;
+      --brass-2:#8f6a2e;
+      --sage:#3f6b53;
+      --rust:#9a4a35;
+      --text-on-paper:#2a2216;
+      --text-dim:#8b93a3;
+      --text-light:#e7e2d3;
+    }
 
-.stApp {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 1px,
-      transparent 1px,
-      transparent 34px
-    ),
-    radial-gradient(
-      ellipse at 20% -10%,
-      #1b2740 0%,
-      var(--ink) 55%
-    );
-  color: var(--text-light);
-}
+    /* ---------- Global page ---------- */
 
-#MainMenu,
-footer,
-header[data-testid="stHeader"] {
-  visibility: hidden;
-  height: 0;
-}
+    html, body, [class*="css"]{
+      font-family:'Inter', sans-serif;
+    }
 
-.block-container {
-  padding-top: 2.6rem;
-  max-width: 1180px;
-}
+    .stApp{
+      background:
+        repeating-linear-gradient(
+          180deg,
+          rgba(255,255,255,0.018) 0px,
+          rgba(255,255,255,0.018) 1px,
+          transparent 1px,
+          transparent 34px
+        ),
+        radial-gradient(
+          ellipse at 20% -10%,
+          #1b2740 0%,
+          var(--ink) 55%
+        );
+      color:var(--text-light);
+    }
 
-/* ---------- Header / letterhead ---------- */
+    #MainMenu,
+    footer,
+    header[data-testid="stHeader"]{
+      visibility:hidden;
+      height:0;
+    }
 
-.eyebrow-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-bottom: 1px solid rgba(231,226,211,0.18);
-  padding-bottom: 14px;
-  margin-bottom: 26px;
-  font-family: "IBM Plex Mono", monospace;
-  letter-spacing: 0.12em;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-}
+    .block-container{
+      padding-top:2.6rem;
+      max-width:1180px;
+    }
 
-.eyebrow-row span.mark {
-  color: var(--brass);
-}
 
-.masthead h1 {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: 2.7rem;
-  line-height: 1.08;
-  color: var(--text-light);
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
+    /* ---------- Header / letterhead ---------- */
 
-.masthead h1 em {
-  font-style: italic;
-  color: var(--brass);
-  font-weight: 500;
-}
+    .eyebrow-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      border-bottom:1px solid rgba(231,226,211,0.18);
+      padding-bottom:14px;
+      margin-bottom:26px;
+      font-family:'IBM Plex Mono', monospace;
+      letter-spacing:0.12em;
+      font-size:0.72rem;
+      color:var(--text-dim);
+      text-transform:uppercase;
+    }
 
-.masthead p.sub {
-  font-family: "Inter", sans-serif;
-  color: var(--text-dim);
-  font-size: 1rem;
-  max-width: 640px;
-  margin-bottom: 30px;
-}
+    .eyebrow-row span.mark{
+      color:var(--brass);
+    }
 
-/* ---------- Ledger card (paper) ---------- */
+    .masthead h1{
+      font-family:'Fraunces', serif;
+      font-weight:600;
+      font-size:2.7rem;
+      line-height:1.08;
+      color:var(--text-light);
+      margin-bottom:6px;
+      letter-spacing:-0.01em;
+    }
 
-.ledger-card {
-  background: var(--paper);
-  border-radius: 3px;
-  padding: 28px 30px 22px 30px;
-  box-shadow:
-    0 18px 40px -14px rgba(0,0,0,0.55),
-    0 2px 0 rgba(0,0,0,0.08);
-  position: relative;
-  color: var(--text-on-paper);
-}
+    .masthead h1 em{
+      font-style:italic;
+      color:var(--brass);
+      font-weight:500;
+    }
 
-.ledger-card::before {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(42,34,22,0.14);
-  pointer-events: none;
-}
+    .masthead p.sub{
+      font-family:'Inter', sans-serif;
+      color:var(--text-dim);
+      font-size:1rem;
+      max-width:640px;
+      margin-bottom:30px;
+    }
 
-.card-label {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--brass-2);
-  margin-bottom: 4px;
-}
 
-.card-title {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: 1.35rem;
-  margin-bottom: 14px;
-  border-bottom: 1px dashed var(--rule);
-  padding-bottom: 12px;
-}
+    /* ---------- Ledger card ---------- */
 
-/* Streamlit form container */
+    .ledger-card{
+      background:var(--paper);
+      border-radius:3px;
+      padding:28px 30px 22px 30px;
+      box-shadow:
+        0 18px 40px -14px rgba(0,0,0,0.55),
+        0 2px 0 rgba(0,0,0,0.08);
+      position:relative;
+      color:var(--text-on-paper);
+    }
 
-div[data-testid="stForm"] {
-  background: var(--paper);
-  border-radius: 3px;
-  padding: 26px 30px 10px 30px;
-  box-shadow:
-    0 18px 40px -14px rgba(0,0,0,0.55),
-    0 2px 0 rgba(0,0,0,0.08);
-}
+    .ledger-card::before{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border:1px solid rgba(42,34,22,0.14);
+      pointer-events:none;
+    }
 
-div[data-testid="stForm"] label p,
-div[data-testid="stForm"] label {
-  font-family: "IBM Plex Mono", monospace !important;
-  font-size: 0.72rem !important;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-on-paper) !important;
-  opacity: 0.72;
-}
+    .card-label{
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.68rem;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--brass-2);
+      margin-bottom:4px;
+    }
 
-div[data-testid="stForm"] .stRadio label p,
-div[data-testid="stForm"] .stSelectbox label p,
-div[data-testid="stForm"] .stNumberInput label p {
-  opacity: 0.72;
-}
+    .card-title{
+      font-family:'Fraunces', serif;
+      font-weight:600;
+      font-size:1.35rem;
+      margin-bottom:14px;
+      border-bottom:1px dashed var(--rule);
+      padding-bottom:12px;
+      color:var(--text-on-paper) !important;
+    }
 
-/* Inputs */
 
-div[data-testid="stForm"] input,
-div[data-testid="stForm"] select,
-div[data-testid="stForm"] .stSelectbox div[data-baseweb="select"] > div {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1.5px solid var(--rule) !important;
-  border-radius: 0 !important;
-  color: var(--text-on-paper) !important;
-  font-family: "IBM Plex Mono", monospace !important;
-  font-size: 0.92rem !important;
-  box-shadow: none !important;
-}
+    /* ---------- Streamlit form ---------- */
 
-div[data-testid="stForm"] input:focus,
-div[data-testid="stForm"] .stSelectbox div[data-baseweb="select"] > div:focus-within {
-  border-bottom: 1.5px solid var(--brass) !important;
-}
+    div[data-testid="stForm"]{
+      background:var(--paper);
+      border-radius:3px;
+      padding:26px 30px 10px 30px;
+      box-shadow:
+        0 18px 40px -14px rgba(0,0,0,0.55),
+        0 2px 0 rgba(0,0,0,0.08);
+      color:var(--text-on-paper);
+    }
 
-div[data-testid="stForm"] div[data-baseweb="select"] svg {
-  fill: var(--text-on-paper);
-}
 
-/* Radio pills */
+    /* ---------- Form labels ---------- */
 
-div[data-testid="stForm"] div[role="radiogroup"] {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+    div[data-testid="stForm"] label p,
+    div[data-testid="stForm"] label{
+      font-family:'IBM Plex Mono', monospace !important;
+      font-size:0.72rem !important;
+      letter-spacing:0.05em;
+      text-transform:uppercase;
+      color:var(--text-on-paper) !important;
+      opacity:0.72;
+    }
 
-div[data-testid="stForm"] div[role="radiogroup"] label {
-  border: 1px solid var(--rule);
-  padding: 5px 14px 4px 14px;
-  border-radius: 20px;
-  margin-right: 0 !important;
-  opacity: 1 !important;
-  transition: all 0.15s ease;
-}
+    div[data-testid="stForm"] .stRadio label p,
+    div[data-testid="stForm"] .stSelectbox label p,
+    div[data-testid="stForm"] .stNumberInput label p{
+      color:var(--text-on-paper) !important;
+      opacity:0.72;
+    }
 
-div[data-testid="stForm"] div[role="radiogroup"] label:has(input:checked) {
-  background: var(--brass);
-  border-color: var(--brass);
-}
 
-div[data-testid="stForm"] div[role="radiogroup"] label div p {
-  font-family: "Inter", sans-serif !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  font-size: 0.86rem !important;
-  color: var(--text-on-paper) !important;
-  opacity: 1 !important;
-}
+    /* ==========================================================
+       INPUTS / SELECTBOXES
+       The important fix: light text inside the dark controls.
+       ========================================================== */
 
-hr.ledger-rule {
-  border: none;
-  border-top: 1px dashed var(--rule);
-  margin: 6px 0 18px 0;
-}
+    /* Text and number inputs */
 
-/* Submit button */
+    div[data-testid="stForm"] input,
+    div[data-testid="stForm"] input[type="text"],
+    div[data-testid="stForm"] input[type="number"]{
+      background:#252630 !important;
+      color:#F1E8D6 !important;
+      -webkit-text-fill-color:#F1E8D6 !important;
 
-div[data-testid="stForm"] button[kind="formSubmit"],
-.stButton > button {
-  background: var(--brass) !important;
-  color: #1c1408 !important;
-  border: none !important;
-  border-radius: 2px !important;
-  font-family: "IBM Plex Mono", monospace !important;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.76rem !important;
-  padding: 10px 22px !important;
-  font-weight: 600 !important;
-  transition: transform 0.1s ease, background 0.15s ease;
-}
+      border:none !important;
+      border-bottom:1.5px solid var(--rule) !important;
+      border-radius:0 !important;
 
-div[data-testid="stForm"] button[kind="formSubmit"]:hover,
-.stButton > button:hover {
-  background: var(--brass-2) !important;
-  transform: translateY(-1px);
-}
+      font-family:'IBM Plex Mono', monospace !important;
+      font-size:0.92rem !important;
 
-/* Secondary quick-fill buttons */
+      box-shadow:none !important;
+      caret-color:var(--brass) !important;
+    }
 
-.quickfill .stButton > button {
-  background: transparent !important;
-  color: var(--text-dim) !important;
-  border: 1px solid rgba(231,226,211,0.25) !important;
-  font-weight: 500 !important;
-  padding: 6px 14px !important;
-  font-size: 0.68rem !important;
-}
+    /* Number input value */
 
-.quickfill .stButton > button:hover {
-  color: var(--text-light) !important;
-  border-color: var(--brass) !important;
-}
+    div[data-testid="stForm"] input[type="number"]{
+      color:#F1E8D6 !important;
+      -webkit-text-fill-color:#F1E8D6 !important;
+    }
 
-/* ---------- Decision slip ---------- */
+    /* Selectbox itself */
 
-.slip-empty {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.85rem;
-  color: var(--text-on-paper);
-  opacity: 0.55;
-  padding: 40px 6px 60px 6px;
-  line-height: 1.7;
-}
+    div[data-testid="stForm"] div[data-baseweb="select"] > div{
+      background:#252630 !important;
+      color:#F1E8D6 !important;
 
-.slip-row {
-  display: flex;
-  justify-content: space-between;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.82rem;
-  padding: 5px 0;
-  border-bottom: 1px dotted rgba(42,34,22,0.22);
-}
+      border:none !important;
+      border-bottom:1.5px solid var(--rule) !important;
+      border-radius:0 !important;
 
-.slip-row span.k {
-  opacity: 0.62;
-}
+      box-shadow:none !important;
+    }
 
-.slip-row span.v {
-  font-weight: 600;
-}
+    /* Selected value inside selectbox */
 
-/* Stamp */
+    div[data-testid="stForm"] div[data-baseweb="select"] span,
+    div[data-testid="stForm"] div[data-baseweb="select"] input{
+      color:#F1E8D6 !important;
+      -webkit-text-fill-color:#F1E8D6 !important;
+      font-family:'IBM Plex Mono', monospace !important;
+    }
 
-.stamp-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 18px 0 10px 0;
-  height: 128px;
-}
+    /* Selectbox text containers */
 
-@keyframes stampHit {
-  0% {
-    transform: scale(2.6) rotate(-14deg);
-    opacity: 0;
-  }
-  55% {
-    transform: scale(0.94) rotate(-9deg);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(1.05) rotate(-11deg);
-  }
-  100% {
-    transform: scale(1) rotate(-10deg);
-    opacity: 1;
-  }
-}
+    div[data-testid="stForm"] div[data-baseweb="select"] [data-testid="stMarkdownContainer"],
+    div[data-testid="stForm"] div[data-baseweb="select"] p{
+      color:#F1E8D6 !important;
+    }
 
-.stamp {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 14px 26px;
-  border: 4px double currentColor;
-  border-radius: 8px;
-  transform: rotate(-10deg);
-  animation: stampHit 0.5s cubic-bezier(.2,.8,.3,1.1);
-  white-space: nowrap;
-}
+    /* Dropdown arrow */
 
-.stamp.approve {
-  color: var(--sage);
-}
+    div[data-testid="stForm"] div[data-baseweb="select"] svg{
+      fill:#F1E8D6 !important;
+      color:#F1E8D6 !important;
+    }
 
-.stamp.decline {
-  color: var(--rust);
-}
+    /* Focus state */
 
-.risk-seal {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-  margin-top: 2px;
-  color: var(--text-on-paper);
-  opacity: 0.75;
-}
+    div[data-testid="stForm"] input:focus,
+    div[data-testid="stForm"] div[data-baseweb="select"] > div:focus-within{
+      border-bottom:1.5px solid var(--brass) !important;
+      outline:none !important;
+    }
 
-.risk-seal b {
-  color: var(--brass-2);
-  opacity: 1;
-}
+    /* Number input +/- buttons */
 
-/* Expander */
+    div[data-testid="stForm"] button{
+      color:#F1E8D6 !important;
+    }
 
-div[data-testid="stExpander"] {
-  background: transparent;
-  border: 1px solid rgba(231,226,211,0.14);
-  border-radius: 4px;
-}
+    div[data-testid="stForm"] button svg{
+      fill:#F1E8D6 !important;
+    }
 
-div[data-testid="stExpander"] summary {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dim) !important;
-}
 
-div[data-testid="stExpander"] summary p {
-  color: var(--text-dim) !important;
-}
+    /* ---------- Radio buttons ---------- */
 
-/* Dataframe */
+    div[data-testid="stForm"] div[role="radiogroup"]{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
 
-div[data-testid="stDataFrame"] {
-  border-radius: 4px;
-  overflow: hidden;
-}
+    div[data-testid="stForm"] div[role="radiogroup"] label{
+      border:1px solid var(--rule);
+      padding:5px 14px 4px 14px;
+      border-radius:20px;
+      margin-right:0 !important;
+      opacity:1 !important;
+      transition:all 0.15s ease;
+    }
 
-.footnote {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  opacity: 0.6;
-  margin-top: 36px;
-  line-height: 1.6;
-}
-</style>
-""",
+    div[data-testid="stForm"] div[role="radiogroup"] label:has(input:checked){
+      background:var(--brass);
+      border-color:var(--brass);
+    }
+
+    div[data-testid="stForm"] div[role="radiogroup"] label div p{
+      font-family:'Inter', sans-serif !important;
+      text-transform:none !important;
+      letter-spacing:0 !important;
+      font-size:0.86rem !important;
+      color:var(--text-on-paper) !important;
+      opacity:1 !important;
+    }
+
+
+    /* ---------- Ledger rules ---------- */
+
+    hr.ledger-rule{
+      border:none;
+      border-top:1px dashed var(--rule);
+      margin:6px 0 18px 0;
+    }
+
+
+    /* ---------- Submit button ---------- */
+
+    div[data-testid="stForm"] button[kind="formSubmit"],
+    .stButton > button{
+      background:var(--brass) !important;
+      color:#1c1408 !important;
+      border:none !important;
+      border-radius:2px !important;
+
+      font-family:'IBM Plex Mono', monospace !important;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.76rem !important;
+      padding:10px 22px !important;
+      font-weight:600 !important;
+
+      transition:
+        transform 0.1s ease,
+        background 0.15s ease;
+    }
+
+    div[data-testid="stForm"] button[kind="formSubmit"]:hover,
+    .stButton > button:hover{
+      background:var(--brass-2) !important;
+      transform:translateY(-1px);
+    }
+
+
+    /* ---------- Decision slip ---------- */
+
+    .slip-empty{
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.85rem;
+      color:var(--text-on-paper);
+      opacity:0.55;
+      padding:40px 6px 60px 6px;
+      line-height:1.7;
+    }
+
+    .slip-row{
+      display:flex;
+      justify-content:space-between;
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.82rem;
+      padding:5px 0;
+      border-bottom:1px dotted rgba(42,34,22,0.22);
+    }
+
+    .slip-row span.k{
+      opacity:0.62;
+    }
+
+    .slip-row span.v{
+      font-weight:600;
+    }
+
+
+    /* ---------- Approval / decline stamp ---------- */
+
+    .stamp-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:18px 0 10px 0;
+      height:128px;
+    }
+
+    @keyframes stampHit{
+      0%{
+        transform:scale(2.6) rotate(-14deg);
+        opacity:0;
+      }
+
+      55%{
+        transform:scale(0.94) rotate(-9deg);
+        opacity:1;
+      }
+
+      75%{
+        transform:scale(1.05) rotate(-11deg);
+      }
+
+      100%{
+        transform:scale(1) rotate(-10deg);
+        opacity:1;
+      }
+    }
+
+    .stamp{
+      font-family:'Fraunces', serif;
+      font-weight:600;
+      font-size:1.5rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      padding:14px 26px;
+      border:4px double currentColor;
+      border-radius:8px;
+      transform:rotate(-10deg);
+      animation:stampHit 0.5s cubic-bezier(.2,.8,.3,1.1);
+      white-space:nowrap;
+    }
+
+    .stamp.approve{
+      color:var(--sage);
+    }
+
+    .stamp.decline{
+      color:var(--rust);
+    }
+
+    .risk-seal{
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.68rem;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      text-align:center;
+      margin-top:2px;
+      color:var(--text-on-paper);
+      opacity:0.75;
+    }
+
+    .risk-seal b{
+      color:var(--brass-2);
+      opacity:1;
+    }
+
+
+    /* ---------- Expander ---------- */
+
+    div[data-testid="stExpander"]{
+      background:transparent;
+      border:1px solid rgba(231,226,211,0.14);
+      border-radius:4px;
+    }
+
+    div[data-testid="stExpander"] summary{
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.75rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--text-dim) !important;
+    }
+
+    div[data-testid="stExpander"] summary p{
+      color:var(--text-dim) !important;
+    }
+
+
+    /* ---------- Dataframe ---------- */
+
+    div[data-testid="stDataFrame"]{
+      border-radius:4px;
+      overflow:hidden;
+    }
+
+
+    /* ---------- Footer note ---------- */
+
+    .footnote{
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.68rem;
+      color:var(--text-dim);
+      opacity:0.6;
+      margin-top:36px;
+      line-height:1.6;
+    }
+
+    </style>
+    """,
     unsafe_allow_html=True,
 )
 
