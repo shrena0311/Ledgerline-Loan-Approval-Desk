@@ -604,7 +604,7 @@ def build_feature_row(raw, columns):
     .str.strip()
     .str.replace("3+", "3", regex=False)
 )
-row["Dependents"] = pd.to_numeric(row["Dependents"], errors="coerce").fillna(0).astype(int)
+    row["Dependents"] = pd.to_numeric(row["Dependents"], errors="coerce").fillna(0).astype(int)
     row["TotalIncome"] = row["ApplicantIncome"] + row["CoapplicantIncome"]
     row["Income_to_Loan_Ratio"] = row["TotalIncome"] / row["LoanAmount"]
     row["Income_Per_Dependent"] = row["TotalIncome"] / (row["Dependents"] + 1)
