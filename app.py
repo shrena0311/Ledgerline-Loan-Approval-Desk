@@ -751,10 +751,10 @@ with left:
         submitted = st.form_submit_button("Submit application")
 
 with right:
-    st.markdown('<div class="ledger-card">', unsafe_allow_html=True)
-    st.markdown('<div class="card-label">Section C</div>', unsafe_allow_html=True)
-    st.markdown('<div class="card-title">Decision Slip</div>', unsafe_allow_html=True)
-
+    with st.container(key="decision_slip"):
+        st.markdown('<div class="card-label">Section C</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Decision Slip</div>', unsafe_allow_html=True)
+        
     if submitted:
         raw = dict(
             Gender=gender, Married=married, Dependents=dependents, Education=education,
