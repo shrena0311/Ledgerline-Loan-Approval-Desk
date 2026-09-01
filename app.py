@@ -26,12 +26,6 @@ CAT_COLS = ["Gender", "Married", "Education", "Self_Employed", "Property_Area"]
 # --------------------------------------------------------------------------
 # Style: a bank ledger sitting on a clerk's desk, not a dashboard.
 # --------------------------------------------------------------------------
-# --------------------------------------------------------------------------
-# Style: a bank ledger sitting on a clerk's desk, not a dashboard.
-# --------------------------------------------------------------------------
-# --------------------------------------------------------------------------
-# Style: a bank ledger sitting on a clerk's desk, not a dashboard.
-# --------------------------------------------------------------------------
 st.markdown(
     """
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -173,6 +167,22 @@ st.markdown(
       border-bottom:1px dashed var(--rule);
       padding-bottom:12px;
       color:var(--text-on-paper) !important;
+    }
+
+    /* ---------- Decision slip container ----------
+       st.container(key="decision_slip") renders as a div carrying the
+       "st-key-decision_slip" class. It needs the same paper treatment
+       as .ledger-card, or its dark-ink text is invisible on the navy
+       app background. */
+
+    div.st-key-decision_slip{
+      background:var(--paper);
+      border-radius:3px;
+      padding:28px 30px 22px 30px;
+      box-shadow:
+        0 18px 40px -14px rgba(0,0,0,0.55),
+        0 2px 0 rgba(0,0,0,0.08);
+      color:var(--text-on-paper);
     }
 
 
@@ -731,17 +741,17 @@ with left:
         c3, c4 = st.columns(2)
         with c3:
             app_income = st.number_input(
-                "Your monthly income ($)", min_value=0, step=100, key="app_income"
+                "Your monthly income (₹)", min_value=0, step=100, key="app_income"
             )
             coapp_income = st.number_input(
-                "Co-applicant's monthly income ($, 0 if none)", min_value=0, step=100, key="coapp_income"
+                "Co-applicant's monthly income (₹, 0 if none)", min_value=0, step=100, key="coapp_income"
             )
             credit_history = st.radio(
                 "Clean credit history?", ["Yes", "No"], key="credit_history", horizontal=True
             )
         with c4:
             loan_amount = st.number_input(
-                "Loan amount requested (in $000s)", min_value=1, step=5, key="loan_amount"
+                "Loan amount requested (in ₹000s)", min_value=1, step=5, key="loan_amount"
             )
             loan_term = st.selectbox(
                 "Loan term (months)", [12, 36, 60, 84, 120, 180, 240, 300, 360, 480], key="loan_term"
@@ -754,91 +764,89 @@ with right:
     with st.container(key="decision_slip"):
         st.markdown('<div class="card-label">Section C</div>', unsafe_allow_html=True)
         st.markdown('<div class="card-title">Decision Slip</div>', unsafe_allow_html=True)
-        
-    if submitted:
-        raw = dict(
-            Gender=gender, Married=married, Dependents=dependents, Education=education,
-            Self_Employed=self_employed, ApplicantIncome=app_income, CoapplicantIncome=coapp_income,
-            LoanAmount=loan_amount, Loan_Amount_Term=loan_term,
-            Credit_History=1 if credit_history == "Yes" else 0, Property_Area=property_area,
-        )
-        row = build_feature_row(raw, bundle["columns"])
-        scaled = bundle["scaler"].transform(row)
-        prob = bundle["model"].predict_proba(scaled)[0][1]
-        decision = "approve" if prob >= 0.5 else "decline"
-        risk_label, risk_color = risk_of(prob)
-        st.session_state["result"] = dict(
-            prob=prob, decision=decision, risk_label=risk_label, risk_color=risk_color,
-            raw=raw, total_income=app_income + coapp_income,
-        )
 
-    result = st.session_state.get("result")
-
-    if not result:
-        st.markdown(
-            """
-            <div class="slip-empty">
-            No decision on file yet.<br>
-            Complete the applicant file on the left and press
-            <b>Submit application</b> — the stamp falls here.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        prob = result["prob"]
-        fig = go.Figure(
-            go.Indicator(
-                mode="gauge+number",
-                value=round(prob * 100, 1),
-                number={"suffix": "%", "font": {"family": "IBM Plex Mono", "size": 34, "color": "#2a2216"}},
-                gauge={
-                    "axis": {"range": [0, 100], "tickcolor": "#8b7a52", "tickfont": {"size": 10}},
-                    "bar": {"color": "#B7863C", "thickness": 0.28},
-                    "bgcolor": "rgba(0,0,0,0)",
-                    "borderwidth": 0,
-                    "steps": [
-                        {"range": [0, 60], "color": "rgba(154,74,53,0.18)"},
-                        {"range": [60, 80], "color": "rgba(183,134,60,0.18)"},
-                        {"range": [80, 100], "color": "rgba(63,107,83,0.18)"},
-                    ],
-                },
+        if submitted:
+            raw = dict(
+                Gender=gender, Married=married, Dependents=dependents, Education=education,
+                Self_Employed=self_employed, ApplicantIncome=app_income, CoapplicantIncome=coapp_income,
+                LoanAmount=loan_amount, Loan_Amount_Term=loan_term,
+                Credit_History=1 if credit_history == "Yes" else 0, Property_Area=property_area,
             )
-        )
-        fig.update_layout(
-            height=190,
-            margin=dict(l=20, r=20, t=15, b=0),
-            paper_bgcolor="rgba(0,0,0,0)",
-            font={"family": "IBM Plex Mono"},
-        )
-        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+            row = build_feature_row(raw, bundle["columns"])
+            scaled = bundle["scaler"].transform(row)
+            prob = bundle["model"].predict_proba(scaled)[0][1]
+            decision = "approve" if prob >= 0.5 else "decline"
+            risk_label, risk_color = risk_of(prob)
+            st.session_state["result"] = dict(
+                prob=prob, decision=decision, risk_label=risk_label, risk_color=risk_color,
+                raw=raw, total_income=app_income + coapp_income,
+            )
 
-        stamp_class = "approve" if result["decision"] == "approve" else "decline"
-        stamp_text = "Loan Approved" if result["decision"] == "approve" else "Application Declined"
-        st.markdown(
-            f"""
-            <div class="stamp-wrap"><div class="stamp {stamp_class}">{stamp_text}</div></div>
-            <div class="risk-seal">Risk grade — <b>{result['risk_label']}</b></div>
-            """,
-            unsafe_allow_html=True,
-        )
+        result = st.session_state.get("result")
 
-        st.markdown('<hr class="ledger-rule">', unsafe_allow_html=True)
-        r = result["raw"]
-        rows = [
-            ("Household income / mo", f"${result['total_income']:,.0f}"),
-            ("Loan requested", f"${r['LoanAmount']*1000:,.0f}"),
-            ("Term", f"{r['Loan_Amount_Term']} months"),
-            ("Credit history", "Clean" if r["Credit_History"] == 1 else "Flagged"),
-            ("Property area", r["Property_Area"]),
-        ]
-        for k, v in rows:
+        if not result:
             st.markdown(
-                f'<div class="slip-row"><span class="k">{k}</span><span class="v">{v}</span></div>',
+                """
+                <div class="slip-empty">
+                No decision on file yet.<br>
+                Complete the applicant file on the left and press
+                <b>Submit application</b> — the stamp falls here.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            prob = result["prob"]
+            fig = go.Figure(
+                go.Indicator(
+                    mode="gauge+number",
+                    value=round(prob * 100, 1),
+                    number={"suffix": "%", "font": {"family": "IBM Plex Mono", "size": 34, "color": "#2a2216"}},
+                    gauge={
+                        "axis": {"range": [0, 100], "tickcolor": "#8b7a52", "tickfont": {"size": 10}},
+                        "bar": {"color": "#B7863C", "thickness": 0.28},
+                        "bgcolor": "rgba(0,0,0,0)",
+                        "borderwidth": 0,
+                        "steps": [
+                            {"range": [0, 60], "color": "rgba(154,74,53,0.18)"},
+                            {"range": [60, 80], "color": "rgba(183,134,60,0.18)"},
+                            {"range": [80, 100], "color": "rgba(63,107,83,0.18)"},
+                        ],
+                    },
+                )
+            )
+            fig.update_layout(
+                height=190,
+                margin=dict(l=20, r=20, t=15, b=0),
+                paper_bgcolor="rgba(0,0,0,0)",
+                font={"family": "IBM Plex Mono"},
+            )
+            st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+            stamp_class = "approve" if result["decision"] == "approve" else "decline"
+            stamp_text = "Loan Approved" if result["decision"] == "approve" else "Application Declined"
+            st.markdown(
+                f"""
+                <div class="stamp-wrap"><div class="stamp {stamp_class}">{stamp_text}</div></div>
+                <div class="risk-seal">Risk grade — <b>{result['risk_label']}</b></div>
+                """,
                 unsafe_allow_html=True,
             )
 
-    st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown('<hr class="ledger-rule">', unsafe_allow_html=True)
+            r = result["raw"]
+            rows = [
+                ("Household income / mo", f"₹{result['total_income']:,.0f}"),
+                ("Loan requested", f"₹{r['LoanAmount']*1000:,.0f}"),
+                ("Term", f"{r['Loan_Amount_Term']} months"),
+                ("Credit history", "Clean" if r["Credit_History"] == 1 else "Flagged"),
+                ("Property area", r["Property_Area"]),
+            ]
+            for k, v in rows:
+                st.markdown(
+                    f'<div class="slip-row"><span class="k">{k}</span><span class="v">{v}</span></div>',
+                    unsafe_allow_html=True,
+                )
 
 # --------------------------------------------------------------------------
 # Behind the decision
